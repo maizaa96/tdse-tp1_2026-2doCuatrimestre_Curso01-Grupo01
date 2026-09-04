@@ -1,0 +1,9 @@
+**Describir la solución de COMA Electronics, referencia de 3.1.- TA134 - TdSE - 1er Proyecto, Intelligent Parking
+Management System - Automated Parking System - Parking Ticket Dispenser Machine (Entry).**
+
+Primeramente, es importante remarcar que el "Parking Ticket Dispenser Machine" forma parte del "Intelligent Parking Management System", siendo la "interfaz" a traves de la cual el usuario y el sistema se comunicaran mutuamente.
+Habiendo aclarado esto, comencemos hablando del "Intelligent Parking Management System", este sistema consta de cuatro elementos, el totem (Parking Ticket Dispenser Machine), la barrera, camaras, bobinas magneticas y un servidor que se encargara del procesamiento.
+
+Antes de ingresar un auto al punto de control de acceso, la camara lo detecta, verificando que efectivamente se trata de un ingreso vehicular genuino. A continuacion, el usuario pulsa un boton en el totem, el cual imprime un ticket con un numero serial, fecha y hora. Luego, se le envia una señal de apertura a la barrera. Al pasar el auto por la barrera, altera el campo magnetico de una bobina de cobre enterrada bajo el suelo. Al sensar que el campo magnetico volvio a la normalidad (es decir, a los valores que tenia previo a la interferencia producida por el vehiculo), la barrera recibe una señal de cierre. Una vez que el cliente estaciona su auto, se dirige a una estacion de pago, donde abona el importe marcado en el ticket, habilitandolo para luego fichar su salida.
+
+Finalmente, al querer retirarse del estacionamiento, la camara nuevamente detecta el acercamiento del vehiculo, el cliente escanea su ticket para marcar su salida del estacionamiento, la barrera se abre frente a la señal de apertura recibida, y termina por cerrarse cuando el campo magnetico de la bobina vuelve a la normalidad.
