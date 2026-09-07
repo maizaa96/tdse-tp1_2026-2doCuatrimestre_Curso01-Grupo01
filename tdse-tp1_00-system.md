@@ -20,13 +20,13 @@ Y nuestras **[guardas]** serán las acciones del módulo anterior (Sensor):
 **Estados**
 
 
-`SYSTEM_IDLE`
+`ST_SYSTEM_IDLE`
 
 
 >Consultar si no habría que agregar un SYSTEM_PROCESSING que sirva como estado mientras el sistema está activamente procesando una acción, y que SYSTEM_ACTIVE esté activa una vez que el sistema ya completó la acción y está aguardando el accionar del usuario.
 
 
-`SYSTEM_ACTIVE`
+`ST_SYSTEM_ACTIVE`
 
 
 Podemos definir dos estados principales, uno cuando el sistema está esperando recibir un evento, y otro cuando el sistema está activamente procesando información. Se está constantemente cada 1ms evaluando la guarda, para ver si el botón fue presionado o no, y se transiciona de IDLE a ACTIVE al verificarse la guarda.
@@ -47,5 +47,5 @@ Por último, tenemos las acciones que System enviará a los actuadores, si consi
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
-| **SYSTEM_IDLE** | `tick` | `[EV_SYS_ENTRY_BTN_PRESSED]` | **SYSTEM_ACTIVE** | `EV_ACT_LED_ON` |
-| **SYSTEM_ACTIVE** | `tick` | `[EV_SYS_ENTRY_BTN_RELEASED]` | **SYSTEM_IDLE** | `EV_ACT_LED_OFF` |
+| **ST_SYSTEM_IDLE** | `tick` | `[EV_SYS_ENTRY_BTN_PRESSED]` | **ST_SYSTEM_ACTIVE** | `EV_ACT_LED_ON` |
+| **ST_SYSTEM_ACTIVE** | `tick` | `[EV_SYS_ENTRY_BTN_RELEASED]` | **ST_SYSTEM_IDLE** | `EV_ACT_LED_OFF` |
