@@ -18,10 +18,10 @@ Estos estados que enumeramos a continuación son justamente los resultados del s
 Estados: 
 | Estado (Nomenclatura original) | Nuestra nomenclatura | Descripción / Notas |
 | :--- | :--- | :--- |
-| `BUTTON_UP` | `Signal_UP` | Botón en estado alto (liberado) |
-| `BUTTON_DOWN` | `Signal_DOWN` | Botón en estado bajo (presionado) |
-| `BUTTON_Rising` | `Signal_Rising` | Flanco de subida del botón |
-| `BUTTON_Falling` | `Signal_Falling` | Flanco de bajada del botón |
+| `ST_BUTTON_UP` | `Signal_UP` | Botón en estado alto (liberado) |
+| `ST_BUTTON_DOWN` | `Signal_DOWN` | Botón en estado bajo (presionado) |
+| `ST_BUTTON_Rising` | `Signal_Rising` | Flanco de subida del botón |
+| `ST_BUTTON_Falling` | `Signal_Falling` | Flanco de bajada del botón |
 
 > **Nota:** Usamos `Signal` en lugar de `Button` para diferenciar fácilmente las señales lógicas de los eventos físicos.
 (Usamos Signal en vez de Button para diferenciarlos más facil de los eventos).
@@ -44,10 +44,10 @@ Y la verificación a través de la guarda ([guard]) en la transición del estado
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
-| **BUTTON_UP** *(Signal_UP)* | `tick` | [pressed] | **BUTTON_FALLING** *(Signal_Falling)* | entry / timer = 0 (en destino) |
-| **BUTTON_FALLING** *(Signal_Falling)* | `tick` | `[timer >= DEL_ENTRY_BTN && pressed]` | **BUTTON_DOWN** *(Signal_DOWN)* | `EV_SYS_ENTRY_BTN_PRESSED` |
-| **BUTTON_FALLING** *(Signal_Falling)* | `tick` | [!pressed] | **BUTTON_UP** *(Signal_UP)* | - |
-| **BUTTON_DOWN** *(Signal_DOWN)* | `tick` | [!pressed] | **BUTTON_RISING** *(Signal_Rising)* | entry / timer = 0 (en destino) |
-| **BUTTON_RISING** *(Signal_Rising)* | `tick` | `[timer >= DEL_ENTRY_BTN && !pressed]` | **BUTTON_UP** *(Signal_UP)* | `EV_SYS_ENTRY_BTN_RELEASED` |
-| **BUTTON_RISING** *(Signal_Rising)* | `tick` | [pressed] | **BUTTON_DOWN** *(Signal_DOWN)* | - |
+| **ST_BUTTON_UP** *(Signal_UP)* | `tick` | [pressed] | **ST_BUTTON_FALLING** *(Signal_Falling)* | entry / timer = 0 (en destino) |
+| **ST_BUTTON_FALLING** *(Signal_Falling)* | `tick` | `[timer >= DEL_ENTRY_BTN && pressed]` | **ST_BUTTON_DOWN** *(Signal_DOWN)* | `EV_SYS_ENTRY_BTN_PRESSED` |
+| **ST_BUTTON_FALLING** *(Signal_Falling)* | `tick` | [!pressed] | **ST_BUTTON_UP** *(Signal_UP)* | - |
+| **ST_BUTTON_DOWN** *(Signal_DOWN)* | `tick` | [!pressed] | **ST_BUTTON_RISING** *(Signal_Rising)* | entry / timer = 0 (en destino) |
+| **ST_BUTTON_RISING** *(Signal_Rising)* | `tick` | `[timer >= DEL_ENTRY_BTN && !pressed]` | **ST_BUTTON_UP** *(Signal_UP)* | `EV_SYS_ENTRY_BTN_RELEASED` |
+| **ST_BUTTON_RISING** *(Signal_Rising)* | `tick` | [pressed] | **ST_BUTTON_DOWN** *(Signal_DOWN)* | - |
 
