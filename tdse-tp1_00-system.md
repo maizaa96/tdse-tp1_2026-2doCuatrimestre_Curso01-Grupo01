@@ -43,7 +43,7 @@ Por último, tenemos las acciones que System enviará a los actuadores, si consi
 
 >`EV_ACT_LED_BLINK` y `EV_ACT_LED_PULSE` puede que sean usados más adelante.
 
-### System Statechart - State Transition Table
+### Tabla de Estados y Excitaciones del modelo System
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
