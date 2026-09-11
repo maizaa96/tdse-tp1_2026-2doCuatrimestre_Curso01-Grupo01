@@ -23,16 +23,19 @@ Una vez que ya tengo un estado, comunico mediante una acción (es decir, una se�
 
 En primer lugar, definimos tick como una variable entera. El estado natural del boton antes de ser presionado es ST_BUTTON_UP, en este estado se establece un valor para la variable tick, este valor sera utilizado como un delay, para evitar procesar los glitches como un boton presionado.
 
-Luego, si llega el evento de que esta presionado, pasamos al estado intermedio ST_BUTTON_FALLING. Dentro de este evento, se itera reduciendo en 1 el tick. Si resulto ser un glitch y llega el evento EV_NAME_BTN_NOT_PRESSED, se vuelve a ST_BUTTON_UP. Si esto no ocurre, se sigue iterando hasta que el tick llega a 0, activando la guarda de transicion al ST_BUTTON_DOWN y enviando la señal EV_SYS_ENTRY_BTN_PRESSED a System. Luego, hago lo mismo para ST_BUTTON_DOWN, estableciendo el tick en 10. Posteriormente, si ocurre EV_NAME_BTN_NOT_PRESSED pasamos a ST_BUTTON_RISING, donde se itera reduciendo el tick. En caso de que se reciba EV_NAME_BTN
+Luego, si llega el evento de que esta presionado, pasamos al estado intermedio ST_BUTTON_FALLING. Dentro de este evento, se itera reduciendo en 1 el tick. Si resulto ser un glitch y llega el evento EV_NAME_BTN_NOT_PRESSED, se vuelve a ST_BUTTON_UP. Si esto no ocurre, se sigue iterando hasta que el tick llega a 0, activando la guarda de transicion al ST_BUTTON_DOWN y enviando la señal EV_SYS_ENTRY_BTN_PRESSED a System. Luego, hago lo mismo para ST_BUTTON_DOWN, estableciendo el tick en 10. Posteriormente, si ocurre EV_NAME_BTN_NOT_PRESSED pasamos a ST_BUTTON_RISING, donde se itera reduciendo el tick. En caso de que se reciba EV_NAME_BTN_PRESSED, volvemos a ST_BUTTON_DOWN, mientras que si el tick llega tras iterar a 0, se activa la guarda y se pasa al estado ST_BUTTON_UP.
 
 ### Tabla de Estados y Excitaciones del modelo Sensor
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
-| **ST_BUTTON_UP** *(Signal_UP)* | `` | [pressed] | **ST_BUTTON_FALLING** *(Signal_Falling)* | entry / timer = 0 (en destino) |
-| **ST_BUTTON_FALLING** *(Signal_Falling)* | `tick` | `[timer >= DEL_ENTRY_BTN && pressed]` | **ST_BUTTON_DOWN** *(Signal_DOWN)* | `EV_SYS_ENTRY_BTN_PRESSED` |
-| **ST_BUTTON_FALLING** *(Signal_Falling)* | `tick` | [!pressed] | **ST_BUTTON_UP** *(Signal_UP)* | - |
-| **ST_BUTTON_DOWN** *(Signal_DOWN)* | `tick` | [!pressed] | **ST_BUTTON_RISING** *(Signal_Rising)* | entry / timer = 0 (en destino) |
-| **ST_BUTTON_RISING** *(Signal_Rising)* | `tick` | `[timer >= DEL_ENTRY_BTN && !pressed]` | **ST_BUTTON_UP** *(Signal_UP)* | `EV_SYS_ENTRY_BTN_RELEASED` |
-| **ST_BUTTON_RISING** *(Signal_Rising)* | `tick` | [pressed] | **ST_BUTTON_DOWN** *(Signal_DOWN)* | - |
+| Inicio | - | - | - | entry / tick=10 |
+| **ST_BUTTON_UP** | `EV_NAME_BTN_PRESSED` | - | **ST_BUTTON_FALLING** | entry / tick-- |
+| **ST_BUTTON_FALLING** | - | `[tick > 0]` | **ST_BUTTON_FALLING** | - |
+| **ST_BUTTON_FALLING** | `EV_NAME_BTN_NOT_PRESSED` | - | **ST_BUTTON_UP** | - |
+| **ST_BUTTON_FALLING** | - | `[tick==0]` | **ST_BUTTON_DOWN** | entry/ tick=10; raise / EV_SYS_ENTRY_BTN_PRESSED |
+| **ST_BUTTON_DOWN** | `EV_NAME_BTN_NOT_PRESSED` | - | **ST_BUTTON_RISING** | entry / tick-- |
+| **ST_BUTTON_RISING** | `EV_NAME_BTN_PRESSED` | - | **ST_BUTTON_DOWN** | entry / tick=10 |
+| **ST_BUTTON_RISING** | - | `[tick>0]` | **ST_BUTTON_RISING** | entry / tick-- |
+| **ST_BUTTON_RISING** | - | `[tick==0]` | **ST_BUTTON_UP** | entry / tick=10 ; raise EV_SYS_ENTRY_BTN_RELEASED|
 
