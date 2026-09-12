@@ -32,9 +32,9 @@ Finalmente, en cuanto a **acciones** tenemos la señal eléctrica que será envi
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
-| **ST_LED_OFF** | `EV_ACT_LED_BLINK` | `` | **ST_LED_BLINK** | `` |
+| **ST_LED_OFF** | `EV_ACT_LED_BLINK` | `-` | **ST_LED_BLINK** | `-` |
 | **ST_LED_BLINK** | `EV_ACT_LED_ON` | `[tick <= 0]` | **ST_LED_ON** | `EV_LED_PIN_HIGH` |
-| **ST_LED_ON** | `EV_ACT_LED_BLINK` | `` | **ST_LED_BLINK** | `EV_LED_PIN_LOW` |
+| **ST_LED_ON** | `EV_ACT_LED_BLINK` | `-` | **ST_LED_BLINK** | `EV_LED_PIN_LOW` |
 | **ST_LED_BLINK** | `EV_ACT_LED_OFF` | `[tick <= 0]` | **ST_LED_OFF** | `EV_LED_PIN_LOW` |
 
 ### Tabla de Estados y Excitaciones del macro-estado Blink
@@ -42,5 +42,5 @@ Finalmente, en cuanto a **acciones** tenemos la señal eléctrica que será envi
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
 | **Inicio** | `-` | `-` | **ST_LED_ON** | `/raise EV_LED_PIN_HIGH ; entry /tick--` |
-| **ST_LED_ON** | `` | `[tick > 0]` | **ST_LED_OFF** | `/raise EV_LED_PIN_LOW ; entry /tick--` |
-| **ST_LED_OFF** | `` | `[tick > 0]` | **ST_LED_ON** | `/raise EV_LED_PIN_HIGH ; entry /tick--` |
+| **ST_LED_ON** | `-` | `[tick > 0]` | **ST_LED_OFF** | `/raise EV_LED_PIN_LOW ; entry /tick--` |
+| **ST_LED_OFF** | `-` | `[tick > 0]` | **ST_LED_ON** | `/raise EV_LED_PIN_HIGH ; entry /tick--` |
