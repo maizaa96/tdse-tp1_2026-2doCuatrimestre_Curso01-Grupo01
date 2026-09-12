@@ -46,9 +46,9 @@ Tenemos como única variable el tick, que es una variable de tipo entero a la qu
 
 | Current State | Event | [Guard] | Next State | Actions |
 | :--- | :--- | :--- | :--- | :--- |
-| **ST_SYS_IDLE** | `EV_SYS_CAM_BTN_PRESSED` | | **ST_SYS_CAM_ACTIVE** | `entry/ tick = 2000` |
-| **ST_SYS_CAM_ACTIVE** | `EV_SYS_ENTRY_BTN_PRESSED` | | **ST_SYS_BARRIER_RISING** | `EV_ACT_LED_BLINK ; entry/ tick--`|
+| **ST_SYS_IDLE** | `EV_SYS_CAM_BTN_PRESSED` |`-` | **ST_SYS_CAM_ACTIVE** | `entry/ tick = 2000` |
+| **ST_SYS_CAM_ACTIVE** | `EV_SYS_ENTRY_BTN_PRESSED` |`-` | **ST_SYS_BARRIER_RISING** | `EV_ACT_LED_BLINK ; entry/ tick--`|
 | **ST_SYS_BARRIER_RISING** | `-` | `[tick>0]` | **ST_SYS_BARRIER_RISING** | `entry/ tick--` |
 | **ST_SYS_BARRIER_RISING** | `-` | `[tick==0]` | **ST_SYS_COIL_ACTIVE** | `entry/ tick-- ; /raise EV_ACT_LED_ON` |
-| **ST_SYS_COIL_ACTIVE** | `EV_SYS_BTN_COIL_IDLE` | | **ST_SYS_BARRIER_FALLING**| `EV_ACT_LED_BLINK` |
+| **ST_SYS_COIL_ACTIVE** | `EV_SYS_BTN_COIL_IDLE` | `-` | **ST_SYS_BARRIER_FALLING**| `EV_ACT_LED_BLINK` |
 | **ST_SYS_BARRIER_FALLING**| `tick` | `[tick == 0]` | **ST_SYS_IDLE** | `EV_ACT_LED_OFF` |
